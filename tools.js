@@ -3,6 +3,7 @@ let optionsFlag = true;
 let toolsCont =document.querySelector('.tools-cont')
 let pencilCont = document.querySelector('.pencil-tool');
 let eraserCont = document.querySelector('.eraser-tool');
+let upload = document.querySelector('.upload');
 
 
 optionsCont.addEventListener('click', (e)=>{
@@ -51,25 +52,57 @@ eraser.addEventListener('click',(e)=>{
     else eraserCont.style.display = "none";
 })
 
+
+// upload
+
+upload.addEventListener("click",(e)=>{
+    let input = document.createElement("input");
+    input.setAttribute("type","file");
+    input.click();
+    input.addEventListener("change",(e)=>{
+        let file = input.files[0];
+        let url = URL.createObjectURL(file);
+        let stickyTemplateHTML= `
+            <div class="header-cont">
+                <div class="minimize"></div>
+                <div class="close"></div>
+            </div>
+            <div class="notes-cont">
+                <img src="${url}"/>
+            </div>
+        `;
+        createSticky(stickyTemplateHTML);
+    })
+    
+    
+})
+
 //sticky notes
 
 let sticky = document.querySelector('.notes');
 
 sticky.addEventListener('click',(e)=>{
-    let stickyCont = document.createElement('div');
     
-    stickyCont.setAttribute('class','sticky-cont');
-    stickyCont.innerHTML= `
+    let stickyTemplateHTML= `
         <div class="header-cont">
             <div class="minimize"></div>
             <div class="close"></div>
         </div>
         <div class="notes-cont">
-            <textarea ></textarea>
+            <textarea spellcheck="false"></textarea>
         </div>
     `;
-    console.log(stickyCont.children[0].children[0]);
-    // console.log()
+
+    createSticky(stickyTemplateHTML);
+    
+})
+
+function createSticky(stickyTemplateHTML){
+    let stickyCont = document.createElement('div');
+    
+    stickyCont.setAttribute('class','sticky-cont');
+    stickyCont.innerHTML= stickyTemplateHTML;
+   
     document.body.appendChild(stickyCont);
     
     let minimize = stickyCont.querySelector('.minimize');
@@ -85,7 +118,7 @@ sticky.addEventListener('click',(e)=>{
     stickyCont.ondragstart = function() {
         return false;
     };
-})
+}
 
 
 function noteActions(minimize,close,stickyCont){
