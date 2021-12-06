@@ -164,7 +164,7 @@ body{
 }
 
 .notes-cont{
-    background-color: yellow;
+    /* background-color: yellow; */
     height: calc( 100% - 2rem);
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 
