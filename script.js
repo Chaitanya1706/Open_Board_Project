@@ -1,5 +1,5 @@
 let optionsCont = document.querySelector('.options-cont');
-let optionsFlag = true;
+let optionsFlag = false;
 let toolsCont =document.querySelector('.tools-cont')
 let pencilCont = document.querySelector('.pencil-tool');
 let eraserCont = document.querySelector('.eraser-tool');
@@ -30,11 +30,12 @@ function openTool(){
 
 let pencil = document.querySelector('.pencil');
 let eraser = document.querySelector('.eraser');
-let pencilFlag = true;
-let eraserFlag = true;
+let pencilFlag = false;
+let eraserFlag = false;
 
 pencil.addEventListener('click',(e)=>{
-    // eraserCont.style.display = "none";
+    eraserCont.style.display = "none";
+    eraserFlag = false;
     pencilFlag = !pencilFlag;
 
     if(pencilFlag) pencilCont.style.display = "block";
@@ -42,7 +43,8 @@ pencil.addEventListener('click',(e)=>{
 })
 
 eraser.addEventListener('click',(e)=>{
-    // pencilCont.style.display = "none";
+    pencilCont.style.display = "none";
+    pencilFlag = false;
     eraserFlag = !eraserFlag;
 
     if(eraserFlag) eraserCont.style.display = "flex";
