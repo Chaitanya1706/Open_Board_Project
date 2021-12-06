@@ -57,6 +57,7 @@ let sticky = document.querySelector('.notes');
 
 sticky.addEventListener('click',(e)=>{
     let stickyCont = document.createElement('div');
+    
     stickyCont.setAttribute('class','sticky-cont');
     stickyCont.innerHTML= `
         <div class="header-cont">
@@ -67,13 +68,14 @@ sticky.addEventListener('click',(e)=>{
             <textarea ></textarea>
         </div>
     `;
+    console.log(stickyCont.children[0].children[0]);
+    // console.log()
     document.body.appendChild(stickyCont);
-
+    
     let minimize = stickyCont.querySelector('.minimize');
-    // minimize.addEventListener("click", (e) =>{
-    //     console.log("clicked");
-    // });
+    
     let close = stickyCont.querySelector('.close');
+    
     noteActions(minimize,close,stickyCont);
 
     stickyCont.onmousedown = function(event) {
@@ -84,6 +86,7 @@ sticky.addEventListener('click',(e)=>{
         return false;
     };
 })
+
 
 function noteActions(minimize,close,stickyCont){
     close.addEventListener('click',(e)=>{
@@ -104,7 +107,7 @@ function dragAndDrop(element,event){
       
         element.style.position = 'absolute';
         element.style.zIndex = 1000;
-        document.body.append(element);
+        
       
         moveAt(event.pageX, event.pageY);
       

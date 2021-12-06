@@ -126,10 +126,14 @@ body{
 .sticky-cont{
     height: 15rem;
     width: 13rem;
-    background-color: lightblue;
+    /* background-color: lightblue; */
     position: absolute;
     top: 15rem;
     left: 8rem;
+}
+
+.sticky-cont > .minimize {
+    pointer-events: none;
 }
 
 .header-cont{
@@ -148,6 +152,10 @@ body{
 }
 .minimize{
     background-color: green;
+}
+
+.minimize:hover{
+    border: 2px solid black;
 }
 
 .close{
