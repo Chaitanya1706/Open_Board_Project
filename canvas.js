@@ -5,11 +5,18 @@ canvas.height = window.innerHeight;
 let pencilColors = document.querySelectorAll(".pencil-color");
 let pencilWidthElem = document.querySelector(".pencilWidth");
 let eraserWidthElem = document.querySelector(".eraserWidth");
+let download = document.querySelector('.download');
+let undo = document.querySelector(".undo");
+let redo = document.querySelector(".redo");
 
 let penColor = "red";
 let eraserColor = "white";
 let penWidth = pencilWidthElem.value;
 let eraserWidth = eraserWidthElem.value;
+
+let undoRedoTracker = [];
+let track = 0;
+
 
 let mouseDown = false;
 //API
@@ -29,13 +36,37 @@ canvas.addEventListener("mousedown",(e)=>{
 canvas.addEventListener("mousemove",(e)=>{
     if(mouseDown) drawStroke({
         x : e.clientX,
-        y : e.clientY
+        y : e.clientY,
+        color: eraserFlag ? eraserColor : penColor,
+        width: eraserFlag ? eraserWidth : penWidth
     })
 })
 
 canvas.addEventListener("mouseup",(e)=>{
     mouseDown = false;
+    let url = canvas.toDataURL();
+    undoRedoTracker.push(url);
+    track = undoRedoTracker.length-1;
 })
+
+undo.addEventListener("click",(e)=>{
+    if(track>0) track--;
+    undoRedoCanvas(track);
+})
+
+redo.addEventListener("click",(e)=>{
+    if(track<undoRedoTracker.length-1) track++;
+    undoRedoCanvas(track);
+})
+
+function undoRedoCanvas(track){
+    let url = undoRedoTracker[track];
+    let img = new Image(); //new image refrence element
+    img.src = url;
+    img.onload = (e) =>{
+        tool.drawImage(img,0,0,canvas.width,canvas.height);
+    }
+}
 
 function beginPath(strokeObj){
     tool.beginPath();
@@ -43,6 +74,8 @@ function beginPath(strokeObj){
 }
 
 function drawStroke(strokeObj){
+    tool.strokeStyle = strokeObj.color;
+    tool.lineWidth = strokeObj.width;
     tool.lineTo(strokeObj.x,strokeObj.y);
     tool.stroke();
 }
@@ -77,3 +110,11 @@ eraser.addEventListener("click",(e)=>{
     }
 })
 
+download.addEventListener("click",(e)=>{
+    let url = canvas.toDataURL();
+
+    let a = document.createElement("a");
+    a.href = url;
+    a.download = "board.jpg";
+    a.click();
+})
