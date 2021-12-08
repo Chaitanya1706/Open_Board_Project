@@ -4,8 +4,9 @@ const app = express();
 app.use(express.static("public"));
 const socket = require('socket.io');
 
-let server = app.listen("3000",()=>{
-    console.log("Listening at Port 3000!!");
+let port = process.env.PORT || 3000
+let server = app.listen(port,()=>{
+    console.log("Listening at Port" + port);
 })
 
 let io = socket(server);
