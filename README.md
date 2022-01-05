@@ -20,5 +20,7 @@ This is a board for multiple purpose where:</br>
 * Socket.io
 * Heroku
 
+## URL to open the Board
+https://chats-board.herokuapp.com/
 
 
